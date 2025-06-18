@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  # # MySQL 数据库服务
+  # mysql:
+  #   image: mysql:8.0
+  #   container_name: flight-mysql
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: 123456
+  #     MYSQL_DATABASE: mydb
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - mysql_data:/var/lib/mysql
+  #   networks:
+  #     - flight-network
+  #   healthcheck:
+  #     test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+  #     timeout: 20s
+  #     retries: 10
+
+  # Java 后端应用
+  backend:
+    build: 
+      context: .
+      # dockerfile: Dockerfile
+      # args:
+      #   http_proxy: http://proxy.emea.ibm.com:8080
+      #   https_proxy: http://proxy.emea.ibm.com:8080
+      #   no_proxy: localhost,127.0.0.1
+    container_name: flight-api
+    ports:
+      - "8080:8080"
+    environment:
+     # 数据库连接配置
+      # SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mydb
+      # SPRING_DATASOURCE_USERNAME: root
+      # SPRING_DATASOURCE_PASSWORD: 123456
+      
+     # 其他配置
+      JWT_SECRET: yourSecretKeyHereShouldBeAtLeast32CharactersLong
+      SPRING_PROFILES_ACTIVE: docker
+    # volumes:
+      # - ./logs:/app/logs  # 日志挂载到宿主机
+    # networks:
+    #   - flight-network
+    # depends_on:
+    #   mysql:
+    #     condition: service_healthy
+    # restart: unless-stopped
+
+# networks:
+#   flight-network:
+#     driver: bridge
+
+# volumes:
+#   mysql_data:

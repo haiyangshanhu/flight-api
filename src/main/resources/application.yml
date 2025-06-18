@@ -2,19 +2,19 @@ spring:
   application:
     name: mydb
   datasource:
-    url: jdbc:mysql://localhost:3306/mydb
-    username: root
-    password: 123456
+    url: jdbc:mysql://cuihaili-flightdb.cj6gcogsidzt.ap-southeast-2.rds.amazonaws.com:3306/flight_db
+    username: admin
+    password: cuihaili123456
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
 
-logging:
-  file:
-    name: flightapi.log
-    path: logs
+# logging:
+#   file:
+#     name: flightapi.log
+#     path: logs
 jwt:
   secret: yourSecretKeyHereShouldBeAtLeast32CharactersLong
   expiration: 86400000
