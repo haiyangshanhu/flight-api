@@ -2,15 +2,18 @@
 
 import axios from 'axios';
 
+// 统一配置所有请求的基础路径和默认 JSON 数据格式
 // @ts-ignore
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-const API = axios.create({// 创建带基础配置的axios实例
+const API = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
+
+// 请求拦截器（request）在每次发送请求前自动执行
 API.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token'); // 从本地存储获取 token
@@ -24,6 +27,7 @@ API.interceptors.request.use(
   },
 );
 
+//响应拦截器（response）在接收到响应后自动处理错误
 API.interceptors.response.use(
   (response) => {
     return response;
